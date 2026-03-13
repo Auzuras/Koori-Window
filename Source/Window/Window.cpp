@@ -57,7 +57,7 @@ void Window::WIN_CreateWindow(uint16_t _width, uint16_t _height, uint16_t _xPos,
 	DWORD err;
 
 	const uint16_t correctedX = _xPos + KOORI_PRIMARY_MONITOR_CENTER_X - _width * 0.5;
-	const uint16_t correctedY = _xPos + KOORI_PRIMARY_MONITOR_CENTER_Y - _height * 0.5;
+	const uint16_t correctedY = _yPos + KOORI_PRIMARY_MONITOR_CENTER_Y - _height * 0.5;
 
 	m_WindowHandle = CreateWindowEx(0, m_ClassName, m_WindowName, 
 		WS_OVERLAPPEDWINDOW, correctedX, correctedY, _width, _height,

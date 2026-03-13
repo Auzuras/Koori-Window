@@ -52,8 +52,8 @@ private:
 
 	friend LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-	const char* m_ClassName = "Sample Window Class";
-	const char* m_WindowName = "Sample Window Class";
+	const char* m_ClassName = "Koori Window";
+	const char* m_WindowName = "Koori Window";
 
 	HWND m_WindowHandle = NULL;
 
