@@ -14,9 +14,11 @@ add_library(KooriWindow STATIC ${KOORI_WINDOW_SOURCES})
 target_include_directories(KooriWindow PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Include)
 
 if(KOORI_WINDOW_TEST_OPT)
-
     enable_testing()
 
     add_subdirectory(Tests)
+endif()
 
+if(KOORI_WINDOWS)
+    add_compile_definitions(KOORI_WINDOWS)
 endif()
