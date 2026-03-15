@@ -7,9 +7,7 @@ class WindowTest : public testing::Test {};
 
 TEST(WindowTest, Test)
 {
-	Window window({});
-
-	window.KooriShowWindow();
+	Window window(1920, 1080);
 
 	while (!window.WindowShouldClose())
 	{

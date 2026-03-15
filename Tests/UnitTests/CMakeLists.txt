@@ -26,3 +26,7 @@ add_executable(KooriWindowTests ${KOORI_WINDOW_UT_SOURCES})
 target_link_libraries(KooriWindowTests PRIVATE gtest)
 
 target_link_libraries(KooriWindowTests PRIVATE KooriWindow)
+
+if(KOORI_WINDOWS)
+    add_compile_definitions(KOORI_WINDOWS)
+endif()

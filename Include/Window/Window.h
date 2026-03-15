@@ -8,8 +8,6 @@
 
 #include <Windows.h>
 
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
 #endif //KOORI_WINDOWS
 
 class Window
@@ -21,13 +19,31 @@ public:
 
 	void KooriCreateWindow(uint16_t _width, uint16_t _height, uint16_t _xPos = 0u, uint16_t _yPos = 0u);
 
+	void KooriDestroyWindow();
+
 	bool WindowShouldClose();
 
 	void UpdateWindow();
 
-	void KooriShowWindow();
+	void ShowWindow();
 
-	void KooriHideWindow();
+	void HideWindow();
+
+	bool IsFullScreen() const { return m_IsFullScreen; }
+	bool SetFullScreen(bool _fullScreen);
+	bool ToogleFullscreen();
+
+	uint16_t GetWidth() const { return m_WindowWidth; }
+	uint16_t GetHeight() const { return m_WindowHeight; }
+
+	uint16_t GetXPos() const { return m_WindowXPos; }
+	uint16_t GetYPos() const { return m_WindowYPos; }
+
+#ifdef KOORI_WINDOWS
+
+	HWND GetHandle() const { return m_WindowHandle; }
+
+#endif //KOORI_WINDOWS
 
 private:
 
@@ -40,12 +56,13 @@ private:
 
 private:
 
-	uint16_t m_WindowWidth = 1920u;
-	uint16_t m_WindowHeight = 1080u;
+	uint16_t m_WindowWidth = 1280u;
+	uint16_t m_WindowHeight = 720u;
 
 	uint16_t m_WindowXPos = 0u;
 	uint16_t m_WindowYPos = 0u;
 
+	bool m_IsFullScreen = false;
 	bool m_WindowShouldClose = false;
 
 #ifdef KOORI_WINDOWS
