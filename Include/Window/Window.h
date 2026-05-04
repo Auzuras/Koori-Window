@@ -31,7 +31,7 @@ public:
 
 	bool IsFullScreen() const { return m_IsFullScreen; }
 	bool SetFullScreen(bool _fullScreen);
-	bool ToogleFullscreen();
+	void ToogleFullScreen();
 
 	uint16_t GetWidth() const { return m_WindowWidth; }
 	uint16_t GetHeight() const { return m_WindowHeight; }
@@ -50,7 +50,11 @@ private:
 #ifdef KOORI_WINDOWS
 
 	void WIN_CreateWindow(uint16_t _width, uint16_t _height, uint16_t _xPos, uint16_t _yPos);
+
 	void WIN_UpdateWindow();
+
+	void WIN_EnableFullScreen();
+	void WIN_DisableFullScreen();
 
 #endif //KOORI_WINDOWS
 

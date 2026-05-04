@@ -50,6 +50,31 @@ void Window::HideWindow()
 	::ShowWindow(m_WindowHandle, SW_HIDE);
 }
 
+bool Window::SetFullScreen(bool _fullScreen)
+{
+	m_IsFullScreen = _fullScreen;
+	ToogleFullScreen();
+	return m_IsFullScreen;
+}
+
+void Window::ToogleFullScreen()
+{
+	m_IsFullScreen = !m_IsFullScreen;
+
+	if (m_IsFullScreen)
+	{
+#ifdef KOORI_WINDOWS
+		WIN_EnableFullScreen();
+#endif //KOORI_WINDOWS
+	}
+	else
+	{
+#ifdef KOORI_WINDOWS
+		WIN_DisableFullScreen();
+#endif //KOORI_WINDOWS
+	}
+}
+
 #ifdef KOORI_WINDOWS
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -110,6 +135,40 @@ void Window::WIN_UpdateWindow()
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
+}
+
+void Window::WIN_EnableFullScreen()
+{
+	// Define the new window style without borders or controls
+	const UINT windowStyle = WS_OVERLAPPEDWINDOW & ~(WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
+	::SetWindowLongW(m_WindowHandle, GWL_STYLE, windowStyle);
+
+	// Get current monitor info
+	const HMONITOR hMonitor = MonitorFromWindow(m_WindowHandle, MONITOR_DEFAULTTONEAREST);
+	MONITORINFOEX monitorInfo = {};
+	monitorInfo.cbSize = sizeof(MONITORINFOEX);
+	::GetMonitorInfo(hMonitor, &monitorInfo);
+
+	// Resize and reposition the window
+	int cx = monitorInfo.rcMonitor.right - monitorInfo.rcMonitor.left;
+	int cy = monitorInfo.rcMonitor.bottom - monitorInfo.rcMonitor.top;
+
+	::SetWindowPos(m_WindowHandle, HWND_TOP, monitorInfo.rcMonitor.left, monitorInfo.rcMonitor.top, cx, cy, SWP_FRAMECHANGED | SWP_NOACTIVATE);
+
+	// Maximize the window
+	::ShowWindow(m_WindowHandle, SW_MAXIMIZE);
+}
+
+void Window::WIN_DisableFullScreen()
+{
+	// Restore standard window style
+	::SetWindowLong(m_WindowHandle, GWL_STYLE, WS_OVERLAPPEDWINDOW);
+
+	// Restore window position and size
+	::SetWindowPos(m_WindowHandle, HWND_TOP, m_WindowXPos, m_WindowYPos, m_WindowWidth, m_WindowHeight, SWP_FRAMECHANGED | SWP_NOACTIVATE);
+
+	// Show the window in normal mode
+	::ShowWindow(m_WindowHandle, SW_NORMAL);
 }
 
 #endif //KOORI_WINDOWS
