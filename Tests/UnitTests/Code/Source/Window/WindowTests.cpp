@@ -7,7 +7,7 @@ class WindowTest : public testing::Test {};
 
 TEST(WindowTest, Test)
 {
-	Window window(1920, 1080);
+	Window window(960, 540);
 
 	while (!window.WindowShouldClose())
 	{

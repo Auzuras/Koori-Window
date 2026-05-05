@@ -21,7 +21,9 @@ Window::Window(uint16_t _width, uint16_t _height, uint16_t _xPos, uint16_t _yPos
 
 void Window::KooriCreateWindow(uint16_t _width, uint16_t _height, uint16_t _xPos, uint16_t _yPos)
 {
+#ifdef KOORI_WINDOWS
 	WIN_CreateWindow(_width, _height, _xPos, _yPos);
+#endif //KOORI_WINDOWS
 
 	ShowWindow();
 }
@@ -37,17 +39,23 @@ bool Window::WindowShouldClose()
 
 void Window::UpdateWindow()
 {
+#ifdef KOORI_WINDOWS
 	WIN_UpdateWindow();
+#endif //KOORI_WINDOWS
 }
 
 void Window::ShowWindow()
 {
+#ifdef KOORI_WINDOWS
 	::ShowWindow(m_WindowHandle, SW_SHOW);
+#endif //KOORI_WINDOWS
 }
 
 void Window::HideWindow()
 {
+#ifdef KOORI_WINDOWS
 	::ShowWindow(m_WindowHandle, SW_HIDE);
+#endif //KOORI_WINDOWS
 }
 
 bool Window::SetFullScreen(bool _fullScreen)
