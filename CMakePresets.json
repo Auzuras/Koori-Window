@@ -16,9 +16,6 @@
         "type": "equals",
         "lhs": "${hostSystemName}",
         "rhs": "Windows"
-      },
-      "cacheVariables": {
-        "KOORI_WINDOWS":  true
       }
     },
     {

@@ -19,6 +19,4 @@ if(KOORI_WINDOW_TEST_OPT)
     add_subdirectory(Tests)
 endif()
 
-if(KOORI_WINDOWS)
-    add_compile_definitions(KOORI_WINDOWS)
-endif()
+target_compile_definitions(KooriWindow PUBLIC $<$<PLATFORM_ID:Windows>:KOORI_WINDOWS>)
