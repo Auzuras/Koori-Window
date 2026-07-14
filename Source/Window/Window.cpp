@@ -92,12 +92,23 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	switch (uMsg)
 	{
 	case WM_CLOSE:
+	{
 		currentWindow->m_WindowShouldClose = true;
 		::DestroyWindow(hwnd);
 		return 0;
+	}
 	case WM_DESTROY:
+	{
 		::PostQuitMessage(0);
 		return 0;
+	}
+	case WM_SIZE:
+	{
+		currentWindow->m_WindowWidth = static_cast<uint32_t>(LOWORD(lParam));
+		currentWindow->m_WindowHeight = static_cast<uint32_t>(HIWORD(lParam));
+		currentWindow->m_ResizeCallback(currentWindow->m_WindowWidth, currentWindow->m_WindowHeight);
+	}
+	break;
 	}
 
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);

@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <unordered_map>
+#include <functional>
 
 #ifdef KOORI_WINDOWS
 
@@ -13,6 +14,8 @@
 class Window
 {
 public:
+
+	using KooriResizeCallaback = std::function<void(uint32_t _width, uint32_t _height)>;
 
 	Window();
 	Window(uint16_t _width, uint16_t _height, uint16_t _xPos = 0u, uint16_t _yPos = 0u);
@@ -38,6 +41,11 @@ public:
 
 	uint16_t GetXPos() const { return m_WindowXPos; }
 	uint16_t GetYPos() const { return m_WindowYPos; }
+
+	void SetResizeCallback(KooriResizeCallaback _callback)
+	{
+		m_ResizeCallback = std::move(_callback);
+	}
 
 #ifdef KOORI_WINDOWS
 
@@ -68,6 +76,8 @@ private:
 
 	bool m_IsFullScreen = false;
 	bool m_WindowShouldClose = false;
+
+	KooriResizeCallaback m_ResizeCallback = nullptr;
 
 #ifdef KOORI_WINDOWS
 
