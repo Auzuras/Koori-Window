@@ -106,7 +106,9 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
 		currentWindow->m_WindowWidth = static_cast<uint32_t>(LOWORD(lParam));
 		currentWindow->m_WindowHeight = static_cast<uint32_t>(HIWORD(lParam));
-		currentWindow->m_ResizeCallback(currentWindow->m_WindowWidth, currentWindow->m_WindowHeight);
+
+		if(currentWindow->m_ResizeCallback)
+			currentWindow->m_ResizeCallback(currentWindow->m_WindowWidth, currentWindow->m_WindowHeight);
 	}
 	break;
 	}
