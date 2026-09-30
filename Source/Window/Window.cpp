@@ -128,14 +128,14 @@ void Window::WIN_CreateWindow()
 
 	// KOORI_ASSERT
 
-	RECT windowRect = { m_WindowXPos, m_WindowYPos, m_WindowWidth, m_WindowHeight };
+	RECT windowRect = { 0, 0, m_WindowWidth, m_WindowHeight };
 	::AdjustWindowRect(&windowRect, WS_OVERLAPPEDWINDOW, FALSE);
 
-	m_WindowWidth = windowRect.right - windowRect.left;
-	m_WindowHeight = windowRect.bottom - windowRect.top;
+	const uint16_t windowWidth = windowRect.right - windowRect.left;
+	const uint16_t windowHeight = windowRect.bottom - windowRect.top;
 
 	m_WindowHandle = CreateWindowEx(0, m_ClassName, m_WindowName,
-		WS_OVERLAPPEDWINDOW, m_WindowXPos, m_WindowYPos, m_WindowWidth, m_WindowHeight,
+		WS_OVERLAPPEDWINDOW, m_WindowXPos, m_WindowYPos, windowWidth, windowHeight,
 		NULL, NULL, GetModuleHandle(0), NULL);
 
 	// KOORI_ASSERT
