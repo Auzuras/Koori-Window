@@ -10,19 +10,19 @@ static std::unordered_map<HWND, Window*> m_Windows;
 
 Window::Window()
 {
-	KooriCreateWindow(m_WindowWidth, m_WindowHeight, m_WindowXPos, m_WindowYPos);
+	KooriCreateWindow(m_WindowWidth, m_WindowHeight, m_WindowName, m_WindowXPos, m_WindowYPos);
 }
 
-Window::Window(uint16_t _width, uint16_t _height, uint16_t _xPos, uint16_t _yPos)
-	:m_WindowWidth(_width), m_WindowHeight(_height), m_WindowXPos(_xPos), m_WindowYPos(_yPos)
+Window::Window(uint16_t _width, uint16_t _height, const char* _windowName, uint16_t _xPos, uint16_t _yPos)
+	:m_WindowWidth(_width), m_WindowHeight(_height), m_WindowName(_windowName), m_WindowXPos(_xPos), m_WindowYPos(_yPos)
 {
-	KooriCreateWindow(m_WindowWidth, m_WindowHeight, m_WindowXPos, m_WindowYPos);
+	KooriCreateWindow(m_WindowWidth, m_WindowHeight, m_WindowName, m_WindowXPos, m_WindowYPos);
 }
 
-void Window::KooriCreateWindow(uint16_t _width, uint16_t _height, uint16_t _xPos, uint16_t _yPos)
+void Window::KooriCreateWindow(uint16_t _width, uint16_t _height, const char* _windowName, uint16_t _xPos, uint16_t _yPos)
 {
 #ifdef KOORI_WINDOWS
-	WIN_CreateWindow(_width, _height, _xPos, _yPos);
+	WIN_CreateWindow();
 #endif //KOORI_WINDOWS
 
 	ShowWindow();
@@ -116,7 +116,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
-void Window::WIN_CreateWindow(uint16_t _width, uint16_t _height, uint16_t _xPos, uint16_t _yPos)
+void Window::WIN_CreateWindow()
 {
 	WNDCLASS wc = { };
 	wc.lpfnWndProc = WindowProc;
@@ -128,14 +128,14 @@ void Window::WIN_CreateWindow(uint16_t _width, uint16_t _height, uint16_t _xPos,
 
 	// KOORI_ASSERT
 
-	RECT windowRect = { _xPos, _yPos, _width, _height };
+	RECT windowRect = { m_WindowXPos, m_WindowYPos, m_WindowWidth, m_WindowHeight };
 	::AdjustWindowRect(&windowRect, WS_OVERLAPPEDWINDOW, FALSE);
 
-	_width = windowRect.right - windowRect.left;
-	_height = windowRect.bottom - windowRect.top;
+	m_WindowWidth = windowRect.right - windowRect.left;
+	m_WindowHeight = windowRect.bottom - windowRect.top;
 
 	m_WindowHandle = CreateWindowEx(0, m_ClassName, m_WindowName,
-		WS_OVERLAPPEDWINDOW, _xPos, _yPos, _width, _height,
+		WS_OVERLAPPEDWINDOW, m_WindowXPos, m_WindowYPos, m_WindowWidth, m_WindowHeight,
 		NULL, NULL, GetModuleHandle(0), NULL);
 
 	// KOORI_ASSERT

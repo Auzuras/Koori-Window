@@ -18,9 +18,9 @@ public:
 	using KooriResizeCallaback = std::function<void(uint32_t _width, uint32_t _height)>;
 
 	Window();
-	Window(uint16_t _width, uint16_t _height, uint16_t _xPos = 0u, uint16_t _yPos = 0u);
+	Window(uint16_t _width, uint16_t _height, const char* _windowName = "Koori Window", uint16_t _xPos = 0u, uint16_t _yPos = 0u);
 
-	void KooriCreateWindow(uint16_t _width, uint16_t _height, uint16_t _xPos = 0u, uint16_t _yPos = 0u);
+	void KooriCreateWindow(uint16_t _width, uint16_t _height, const char* _windowName = "Koori Window", uint16_t _xPos = 0u, uint16_t _yPos = 0u);
 
 	void KooriDestroyWindow();
 
@@ -35,6 +35,8 @@ public:
 	bool IsFullScreen() const { return m_IsFullScreen; }
 	bool SetFullScreen(bool _fullScreen);
 	void ToogleFullScreen();
+
+	void SetWindowName(const char* _windowName) { m_WindowName = _windowName; }
 
 	uint16_t GetWidth() const { return m_WindowWidth; }
 	uint16_t GetHeight() const { return m_WindowHeight; }
@@ -57,7 +59,7 @@ private:
 
 #ifdef KOORI_WINDOWS
 
-	void WIN_CreateWindow(uint16_t _width, uint16_t _height, uint16_t _xPos, uint16_t _yPos);
+	void WIN_CreateWindow();
 
 	void WIN_UpdateWindow();
 
@@ -76,6 +78,8 @@ private:
 
 	bool m_IsFullScreen = false;
 	bool m_WindowShouldClose = false;
+	
+	const char* m_WindowName = "Koori Window";
 
 	KooriResizeCallaback m_ResizeCallback = nullptr;
 
@@ -84,7 +88,6 @@ private:
 	friend LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 	const char* m_ClassName = "Koori Window";
-	const char* m_WindowName = "Koori Window";
 
 	HWND m_WindowHandle = NULL;
 
