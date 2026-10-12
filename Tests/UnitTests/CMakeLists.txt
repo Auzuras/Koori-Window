@@ -29,4 +29,8 @@ target_link_libraries(KooriWindowTests PRIVATE KooriWindow)
 
 if(KOORI_WINDOWS)
     add_compile_definitions(KOORI_WINDOWS)
+
+    target_link_options(KooriWindowTests PRIVATE
+        "/MANIFEST:EMBED"
+        "/MANIFESTINPUT:${CMAKE_CURRENT_SOURCE_DIR}/../Source/Koori-Window.manifest")
 endif()

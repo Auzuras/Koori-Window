@@ -15,10 +15,6 @@ target_include_directories(KooriWindow PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Includ
 
 target_compile_definitions(KooriWindow PUBLIC $<$<PLATFORM_ID:Windows>:KOORI_WINDOWS>)
 
-if(WIN32)
-    target_sources(KooriWindow PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Source/Koori-Window.manifest")
-endif()
-
 if(KOORI_WINDOW_TEST_OPT)
     enable_testing()
 

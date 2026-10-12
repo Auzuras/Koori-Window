@@ -118,6 +118,9 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 void Window::WIN_CreateWindow()
 {
+	// Temp function because unable to use manifest for now
+	SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+
 	WNDCLASS wc = { };
 	wc.lpfnWndProc = WindowProc;
 	wc.hInstance = GetModuleHandle(0);
